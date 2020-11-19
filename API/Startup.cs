@@ -22,7 +22,7 @@ namespace API
             services.AddControllers();
             services.AddDbContext<StoreContext>(x =>
             {
-                x.UseSqlite(_config.GetConnectionString("DefaultConnection"));
+                x.UseMySql(_config.GetConnectionString("DefaultConnection"));
             });
         }
 
