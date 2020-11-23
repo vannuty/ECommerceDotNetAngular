@@ -1,6 +1,7 @@
-﻿using Core.Interfaces;
+﻿using API.Helpers;
+using AutoMapper;
+using Core.Interfaces;
 using Infrastructure.Data;
-using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,7 @@ namespace API
 
         private static void ResolveRepositories(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
         }
 
         private static void ResolveServices(IServiceCollection services)
@@ -48,6 +49,8 @@ namespace API
                     policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddControllers();
             services.AddHttpClient();
